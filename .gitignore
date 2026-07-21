@@ -7,7 +7,7 @@ vendor/
 node_modules/
 .idea/
 *.log
-
+_ai/backlog/**/*.pdf
 
 
 # +----------------------------+
