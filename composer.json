@@ -1,6 +1,6 @@
 {
     "name":        "topdata/search-analytics-sw6",
-    "description": "Topdata Search Analytics SW6",
+    "description": "Topdata Search Analytics SW6 - Search term logging, aggregation and analytics",
     "version":     "v1.0.0",
     "type":        "shopware-platform-plugin",
     "license":     "MIT",
@@ -18,15 +18,15 @@
         "shopware-plugin-class": "Topdata\\TopdataSearchAnalyticsSW6\\TopdataSearchAnalyticsSW6",
         "plugin-icon": "src/Resources/config/plugin.png",
         "copyright": "(c) by TopData Software GmbH",
-        "label":                 {
+        "label": {
             "en-GB": "Topdata Search Analytics SW6",
             "de-DE": "Topdata Search Analytics SW6"
         },
-        "description":           {
-            "en-GB": "Topdata Search Analytics SW6",
-            "de-DE": "Topdata Search Analytics SW6"
+        "description": {
+            "en-GB": "Search term logging, session consolidation, aggregated statistics and analytics for Shopware 6 storefront search",
+            "de-DE": "Suchbegriff-Logging, Session-Konsolidierung, aggregierte Statistiken und Analysen für die Shopware 6 Storefront-Suche"
         },
-        "manufacturerLink":      {
+        "manufacturerLink": {
             "de-DE": "https://www.topdata.de",
             "en-GB": "https://www.topdata.de"
         }

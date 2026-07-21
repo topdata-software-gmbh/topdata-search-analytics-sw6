@@ -4,13 +4,46 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="Topdata\TopdataSearchAnalyticsSW6\Controller\StorefrontExampleController" public="true">
-            <call method="setContainer">
-                <argument type="service" id="service_container"/>
-            </call>
+        <!-- Entity Definitions -->
+        <service id="Topdata\TopdataSearchAnalyticsSW6\Entity\SearchLog\SearchLogEntityDefinition">
+            <tag name="shopware.entity.definition"/>
         </service>
 
-        <service id="Topdata\TopdataSearchAnalyticsSW6\Controller\AdminApiExampleController" public="true">
+        <service id="Topdata\TopdataSearchAnalyticsSW6\Entity\SearchStats\SearchStatsEntityDefinition">
+            <tag name="shopware.entity.definition"/>
+        </service>
+
+        <!-- Core Business Logic -->
+        <service id="Topdata\TopdataSearchAnalyticsSW6\Service\SearchAnalyticsService" public="true">
+            <argument type="service" id="Doctrine\DBAL\Connection" key="$connection"/>
+        </service>
+
+        <!-- Storefront Search Logging Subscriber -->
+        <service id="Topdata\TopdataSearchAnalyticsSW6\Subscriber\ProductSearchSubscriber">
+            <argument type="service" id="Doctrine\DBAL\Connection" key="$connection"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <!-- CLI Commands -->
+        <service id="Topdata\TopdataSearchAnalyticsSW6\Command\Command_ConsolidateSearchLogs">
+            <argument type="service" id="Topdata\TopdataSearchAnalyticsSW6\Service\SearchAnalyticsService" key="$analyticsService"/>
+            <tag name="console.command"/>
+        </service>
+
+        <!-- Scheduled Tasks -->
+        <service id="Topdata\TopdataSearchAnalyticsSW6\Framework\ScheduledTask\ConsolidateSearchLogsTask">
+            <tag name="shopware.scheduled.task"/>
+        </service>
+
+        <service id="Topdata\TopdataSearchAnalyticsSW6\Framework\ScheduledTask\ConsolidateSearchLogsTaskHandler">
+            <argument type="service" id="scheduled_task.repository"/>
+            <argument type="service" id="Topdata\TopdataSearchAnalyticsSW6\Service\SearchAnalyticsService" key="$analyticsService"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <!-- API Controllers -->
+        <service id="Topdata\TopdataSearchAnalyticsSW6\Controller\SearchStatsController" public="true">
+            <argument type="service" id="Doctrine\DBAL\Connection" key="$connection"/>
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>

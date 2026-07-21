@@ -2,13 +2,14 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
     <card>
-        <title>Basic Configuration</title>
-        <title lang="de-DE">Grundeinstellungen</title>
-        
-        <input-field>
-            <name>example</name>
-            <label>Example Configuration</label>
-            <label lang="de-DE">Beispiel Konfiguration</label>
+        <title>Search Analytics</title>
+        <title lang="de-DE">Suchanalysen</title>
+
+        <input-field type="bool">
+            <name>enabled</name>
+            <label>Enable Search Logging</label>
+            <label lang="de-DE">Suchbegriff-Logging aktivieren</label>
+            <defaultValue>true</defaultValue>
         </input-field>
     </card>
 </config>

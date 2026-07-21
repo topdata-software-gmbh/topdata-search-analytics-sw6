@@ -1,0 +1,39 @@
+{
+    "TopdataSearchAnalyticsSW6": {
+        "nav": {
+            "mainTitle": "Suchanalysen",
+            "searchStats": "Suchstatistiken",
+            "searchLog": "Suchprotokoll"
+        },
+        "topdata-sa-search-stats": {
+            "title": "Suchstatistiken",
+            "description": "Statistiken \u00fcber Suchanfragen von Kunden",
+            "listTitle": "Suchbegriffe",
+            "columnTerm": "Suchbegriff",
+            "columnCount": "Suchanfragen gesamt",
+            "columnZeroCount": "Null-Ergebnisse gesamt",
+            "columnAvgResultCount": "\u00f8 Trefferanzahl",
+            "columnLastSearchedAt": "Zuletzt gesucht",
+            "columnCreatedAt": "Erstmals gesehen",
+            "buttonDownloadCsv": "CSV herunterladen",
+            "buttonReset": "Zur\u00fccksetzen",
+            "resetModalTitle": "Statistiken zur\u00fccksetzen",
+            "resetModalBody": "Sind Sie sicher, dass alle Suchstatistiken und unvollst\u00e4ndigen Suchprotokolle gel\u00f6scht werden sollen? Diese Aktion kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
+            "resetModalConfirm": "Ja, alle zur\u00fccksetzen",
+            "resetSuccess": "Suchstatistiken wurden zur\u00fcckgesetzt.",
+            "resetError": "Fehler beim Zur\u00fccksetzen der Suchstatistiken.",
+            "exportError": "Fehler beim Exportieren der Suchstatistiken."
+        },
+        "topdata-sa-search-log": {
+            "title": "Suchprotokoll",
+            "description": "Live-Ansicht der rohen Suchanfragen",
+            "columnTerm": "Suchbegriff",
+            "columnResultCount": "Ergebnisse",
+            "columnSessionToken": "Sitzung",
+            "columnCreatedAt": "Gesucht am",
+            "buttonRefresh": "Aktualisieren",
+            "searchPlaceholder": "Nach Suchbegriff filtern\u2026",
+            "transientNotice": "Dieses Protokoll ist transient. Rohe Suchanfragen werden st\u00fcndlich automatisch konsolidiert und gel\u00f6scht. Die angezeigten Daten sind eine Live-Momentaufnahme und k\u00f6nnen nach der n\u00e4chsten Konsolidierung verschwinden."
+        }
+    }
+}
