@@ -21,6 +21,7 @@
         <!-- Storefront Search Logging Subscriber -->
         <service id="Topdata\TopdataSearchAnalyticsSW6\Subscriber\ProductSearchSubscriber">
             <argument type="service" id="Doctrine\DBAL\Connection" key="$connection"/>
+            <argument type="service" id="Psr\Log\LoggerInterface" key="$logger"/>
             <tag name="kernel.event_subscriber"/>
         </service>
 

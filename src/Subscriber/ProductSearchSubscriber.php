@@ -3,6 +3,7 @@
 namespace Topdata\TopdataSearchAnalyticsSW6\Subscriber;
 
 use Doctrine\DBAL\Connection;
+use Psr\Log\LoggerInterface;
 use Shopware\Core\Content\Product\Events\ProductSearchResultEvent;
 use Shopware\Core\Content\Product\Events\ProductSuggestResultEvent;
 use Shopware\Core\Content\Product\ProductEvents;
@@ -11,7 +12,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProductSearchSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly Connection $connection)
+    public function __construct(
+        private readonly Connection $connection,
+        private readonly LoggerInterface $logger,
+    )
     {
     }
 
@@ -25,7 +29,15 @@ class ProductSearchSubscriber implements EventSubscriberInterface
 
     public function onSearchResult($event): void
     {
-        $term = $event->getRequest()->get('search');
+        $request = $event->getRequest();
+        $route = $request->attributes->get('_route');
+
+        // Skip AJAX filter / pagination / sorting requests on the main search page
+        if ($route === 'frontend.search.page' && $request->isXmlHttpRequest()) {
+            return;
+        }
+
+        $term = $request->get('search');
 
         if ($term === null || trim($term) === '') {
             return;
@@ -44,6 +56,45 @@ class ProductSearchSubscriber implements EventSubscriberInterface
         $sessionToken = $event->getSalesChannelContext()->getToken();
 
         try {
+            // Deduplicate: check the last log for this session token
+            $lastLog = $this->connection->fetchAssociative(
+                'SELECT `id`, `term`, `result_count`, `created_at`
+                 FROM `tdsa_search_log`
+                 WHERE `session_token` = :session_token
+                 ORDER BY `created_at` DESC
+                 LIMIT 1',
+                ['session_token' => $sessionToken]
+            );
+
+            if ($lastLog) {
+                $lastCreatedAt = new \DateTime($lastLog['created_at']);
+                $now = new \DateTime();
+                $timeDiff = $now->getTimestamp() - $lastCreatedAt->getTimestamp();
+
+                // If the term is identical and was logged within the last 15 seconds
+                if ($lastLog['term'] === $term && $timeDiff <= 15) {
+                    $this->connection->executeStatement(
+                        'UPDATE `tdsa_search_log`
+                         SET `result_count` = :result_count, `created_at` = :now
+                         WHERE `id` = :id',
+                        [
+                            'result_count' => $resultCount,
+                            'now' => $now->format('Y-m-d H:i:s.v'),
+                            'id' => $lastLog['id'],
+                        ]
+                    );
+                    return;
+                }
+            }
+        } catch (\Throwable $e) {
+            $this->logger->warning('Search log dedup lookup failed, falling back to insert', [
+                'error' => $e->getMessage(),
+                'term' => $term,
+                'session_token' => $sessionToken,
+            ]);
+        }
+
+        try {
             $this->connection->executeStatement(
                 'INSERT INTO `tdsa_search_log` (`id`, `session_token`, `term`, `result_count`, `created_at`)
                  VALUES (:id, :session_token, :term, :result_count, :now)',
@@ -56,6 +107,11 @@ class ProductSearchSubscriber implements EventSubscriberInterface
                 ]
             );
         } catch (\Throwable $e) {
+            $this->logger->warning('Search log insert failed', [
+                'error' => $e->getMessage(),
+                'term' => $term,
+                'session_token' => $sessionToken,
+            ]);
         }
     }
 }

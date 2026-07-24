@@ -3,7 +3,8 @@ filename: "_ai/backlog/active/260724_2237__IMPLEMENTATION_PLAN__deduplicate_and_
 title: "Fix search logging duplication and incorrect result counts"
 createdAt: 2026-07-24 22:37
 updatedAt: 2026-07-24 22:42
-status: in-progress
+status: completed
+completedAt: 2026-07-24 23:00
 priority: medium
 tags: [search, subscriber, logging, shopware6]
 estimatedComplexity: simple
@@ -212,6 +213,7 @@ updatedAt: 2026-07-24 22:37
 planFile: "_ai/backlog/active/260724_2237__IMPLEMENTATION_PLAN__deduplicate_and_filter_search_logs.md"
 project: "SW6.7 Plugin"
 status: completed
+completedAt: 2026-07-24 23:00
 filesCreated: 2
 filesModified: 2
 filesDeleted: 0
