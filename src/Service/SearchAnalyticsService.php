@@ -4,6 +4,7 @@ namespace Topdata\TopdataSearchAnalyticsSW6\Service;
 
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
 use Shopware\Core\Framework\Uuid\Uuid;
 
 class SearchAnalyticsService
@@ -24,7 +25,7 @@ class SearchAnalyticsService
              WHERE `created_at` < :margin
              LIMIT :limit',
             ['margin' => $safetyMargin, 'limit' => $batchSize],
-            ['margin' => \PDO::PARAM_STR, 'limit' => \PDO::PARAM_INT]
+            ['margin' => ParameterType::STRING, 'limit' => ParameterType::INTEGER]
         );
 
         if (empty($tokens)) {
@@ -58,7 +59,7 @@ class SearchAnalyticsService
                 foreach ($finalIntents as $intent) {
                     $this->upsertStat(
                         $intent['term'],
-                        $intent['result_count'],
+                        (int) $intent['result_count'],
                         $intent['created_at']
                     );
                 }
