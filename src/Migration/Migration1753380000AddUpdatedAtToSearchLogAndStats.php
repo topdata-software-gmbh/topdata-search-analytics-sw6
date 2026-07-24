@@ -14,15 +14,8 @@ class Migration1753380000AddUpdatedAtToSearchLogAndStats extends MigrationStep
 
     public function update(Connection $connection): void
     {
-        $connection->executeStatement('
-            ALTER TABLE `tdsa_search_log`
-            ADD COLUMN `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
-        ');
-
-        $connection->executeStatement('
-            ALTER TABLE `tdsa_search_stats`
-            ADD COLUMN `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)
-        ');
+        $this->addColumn($connection, 'tdsa_search_log', 'updated_at', 'DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)');
+        $this->addColumn($connection, 'tdsa_search_stats', 'updated_at', 'DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3)');
     }
 
     public function updateDestructive(Connection $connection): void

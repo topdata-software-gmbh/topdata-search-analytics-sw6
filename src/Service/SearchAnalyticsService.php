@@ -2,6 +2,7 @@
 
 namespace Topdata\TopdataSearchAnalyticsSW6\Service;
 
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Uuid\Uuid;
 
@@ -66,7 +67,7 @@ class SearchAnalyticsService
                 $this->connection->executeStatement(
                     'DELETE FROM `tdsa_search_log` WHERE `id` IN (:ids)',
                     ['ids' => $ids],
-                    ['ids' => Connection::PARAM_BINARY_ARRAY]
+                    ['ids' => ArrayParameterType::BINARY]
                 );
 
                 $this->connection->commit();
