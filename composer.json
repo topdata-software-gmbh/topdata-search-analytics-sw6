@@ -1,7 +1,7 @@
 {
     "name":        "topdata/search-analytics-sw6",
     "description": "Topdata Search Analytics SW6 - Search term logging, aggregation and analytics",
-    "version":     "v1.0.0",
+    "version":     "v1.0.1",
     "type":        "shopware-platform-plugin",
     "license":     "MIT",
     "authors":     [

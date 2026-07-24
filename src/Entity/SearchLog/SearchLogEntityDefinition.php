@@ -10,6 +10,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
 
 class SearchLogEntityDefinition extends EntityDefinition
 {
@@ -38,6 +39,7 @@ class SearchLogEntityDefinition extends EntityDefinition
             (new StringField('term', 'term'))->addFlags(new Required()),
             (new IntField('result_count', 'resultCount'))->addFlags(new Required()),
             (new DateTimeField('created_at', 'createdAt'))->addFlags(new Required()),
+            new UpdatedAtField(),
         ]);
     }
 }

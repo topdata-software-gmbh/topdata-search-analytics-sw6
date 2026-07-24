@@ -10,6 +10,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\UpdatedAtField;
 
 class SearchStatsEntityDefinition extends EntityDefinition
 {
@@ -40,6 +41,7 @@ class SearchStatsEntityDefinition extends EntityDefinition
             (new IntField('avg_result_count', 'avgResultCount'))->addFlags(new Required()),
             (new DateTimeField('created_at', 'createdAt'))->addFlags(new Required()),
             (new DateTimeField('last_searched_at', 'lastSearchedAt')),
+            new UpdatedAtField(),
         ]);
     }
 }

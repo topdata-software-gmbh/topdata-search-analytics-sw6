@@ -25,8 +25,7 @@ class ProductSearchSubscriber implements EventSubscriberInterface
 
     public function onSearchResult($event): void
     {
-        $result = $event->getResult();
-        $term = $result->getCriteria()->getTerm();
+        $term = $event->getRequest()->get('search');
 
         if ($term === null || trim($term) === '') {
             return;
@@ -41,7 +40,7 @@ class ProductSearchSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $resultCount = $result->getTotal();
+        $resultCount = $event->getResult()->getTotal();
         $sessionToken = $event->getSalesChannelContext()->getToken();
 
         try {
